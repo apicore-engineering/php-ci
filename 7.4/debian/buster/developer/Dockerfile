@@ -23,7 +23,7 @@ RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" && \
     libonig-dev \
     zip \
     libzip-dev \
-    PHPIZE_DEPS \
+    $PHPIZE_DEPS \
     nano \
     git \
     openssh-client \
