@@ -21,7 +21,7 @@ RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" && \
     libpng-dev \
     libicu-dev \
     zip \
-    libzip-dev \&& docker-php-ext-configure intl
+    libzip-dev \
     $PHPIZE_DEPS \
     nano \
     git \

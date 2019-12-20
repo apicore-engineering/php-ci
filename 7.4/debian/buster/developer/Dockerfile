@@ -22,8 +22,8 @@ RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" && \
     libicu-dev \
     libonig-dev \
     zip \
-    libzip-dev \&& docker-php-ext-configure intl
-    $PHPIZE_DEPS \
+    libzip-dev \
+    PHPIZE_DEPS \
     nano \
     git \
     openssh-client \
