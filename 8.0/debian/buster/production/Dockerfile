@@ -1,4 +1,4 @@
-FROM php:7.4-apache-buster
+FROM php:8.0-buster
 MAINTAINER "Bence Gazder"
 LABEL maintainer="bence.gazder@apicore.de"
 
@@ -24,7 +24,6 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" && \
     $PHPIZE_DEPS \
     sudo \
 # configure extensions
-    && docker-php-ext-configure zip \
     && docker-php-ext-configure intl --enable-intl \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
 # install extensions
@@ -32,7 +31,6 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" && \
     mbstring \
     intl \
     curl \
-    json \
     pdo_mysql \
     exif \
     zip \
@@ -41,9 +39,6 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" && \
     opcache \
     pcntl \
     sockets \
-# configure stuff
-    && a2enmod rewrite \
-    && echo "ServerName localhost" >> /etc/apache2/apache2.conf \
 # cleanup
     && docker-php-source delete \
     && apt-get purge -y \

@@ -1,4 +1,4 @@
-FROM php:7.4-apache-buster
+FROM php:8.0-apache-buster
 MAINTAINER "Bence Gazder"
 LABEL maintainer="bence.gazder@apicore.de"
 
@@ -32,7 +32,6 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" && \
     mbstring \
     intl \
     curl \
-    json \
     pdo_mysql \
     exif \
     zip \

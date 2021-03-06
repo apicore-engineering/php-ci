@@ -1,10 +1,10 @@
 FROM php:7.4-buster
 MAINTAINER "Bence Gazder"
-LABEL maintainer="bence.gazder@brixify.com"
+LABEL maintainer="bence.gazder@apicore.de"
 
 # install dependencies
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" && \
-    apt update && apt install -y \
+    apt-get update && apt-get install -y \
     supervisor \
     cron \
     ca-certificates \
@@ -42,15 +42,15 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" && \
     sockets \
 # cleanup
     && docker-php-source delete \
-    && apt purge -y \
+    && apt-get purge -y \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     libcurl4-openssl-dev \
     libpng-dev \
     libicu-dev \
     $PHPIZE_DEPS \
-    && apt autoclean -y \
-    && apt autoremove -y \
+    && apt-get autoclean -y \
+    && apt-get autoremove -y \
     && rm -rf /usr/src/ \
     && rm -rf /usr/local/lib/php/test/ \
     && rm -rf /usr/local/bin/phpdbg \
