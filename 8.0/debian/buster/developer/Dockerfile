@@ -59,6 +59,7 @@ RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" && \
     libzip-dev \
     $PHPIZE_DEPS \
     && apt-get clean -y \
+    && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/* \
     && echo "Installed packages:" \
     && dpkg --list \

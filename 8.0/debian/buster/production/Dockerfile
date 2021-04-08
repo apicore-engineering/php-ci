@@ -50,6 +50,7 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" && \
     libicu-dev \
     $PHPIZE_DEPS \
     && apt-get clean -y \
+    && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /usr/src/ \
     && rm -rf /usr/local/lib/php/test/ \
