@@ -1,7 +1,7 @@
 FROM php:7.4-apache-buster
 LABEL maintainer="bence.gazder@apicore.de"
 
-ENV COMPOSER_VERSION 2.0.11
+ENV COMPOSER_VERSION 2.0.12
 
 # install dependencies
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" && \ 
