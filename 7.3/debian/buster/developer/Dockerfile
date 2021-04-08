@@ -65,7 +65,7 @@ RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" && \
     && apt autoclean -y \
     && apt autoremove -y \
     && echo "Installed packages:" \
-    && apt list --installed \
+    && dpkg --list \
     && php -i \
     && php -v
 
