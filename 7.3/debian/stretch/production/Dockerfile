@@ -1,5 +1,4 @@
 FROM php:7.3-stretch
-MAINTAINER "Bence Gazder"
 LABEL maintainer="bence.gazder@apicore.de"
 
 # install dependencies

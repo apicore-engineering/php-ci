@@ -1,5 +1,4 @@
 FROM php:8.0-apache-buster
-MAINTAINER "Bence Gazder"
 LABEL maintainer="bence.gazder@apicore.de"
 
 ENV COMPOSER_VERSION 2.0.11

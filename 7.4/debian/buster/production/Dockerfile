@@ -1,5 +1,4 @@
 FROM php:7.4-buster
-MAINTAINER "Bence Gazder"
 LABEL maintainer="bence.gazder@apicore.de"
 
 # install dependencies
