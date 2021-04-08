@@ -48,8 +48,8 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" && \
     libpng-dev \
     libicu-dev \
     $PHPIZE_DEPS \
-    && apt-get autoclean -y \
-    && apt-get autoremove -y \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/* \
     && rm -rf /usr/src/ \
     && rm -rf /usr/local/lib/php/test/ \
     && rm -rf /usr/local/bin/phpdbg \
