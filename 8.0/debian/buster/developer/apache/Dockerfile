@@ -60,8 +60,8 @@ RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" && \
     libpng-dev \
     libicu-dev \
     $PHPIZE_DEPS \
-    && apt-get clean -y \
     && apt-get autoremove -y \
+    && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* \
     && echo "Installed packages:" \
     && dpkg --list \
