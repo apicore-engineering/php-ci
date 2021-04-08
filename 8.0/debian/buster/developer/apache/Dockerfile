@@ -44,8 +44,8 @@ RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" && \
     pcntl \
     sockets \
 # pecl extensions
-    && pecl install xdebug \
-    && docker-php-ext-enable xdebug \
+    && pecl install xdebug redis \
+    && docker-php-ext-enable xdebug redis \
 # composer
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=${COMPOSER_VERSION} \
     && chmod +x /usr/local/bin/composer \

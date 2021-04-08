@@ -39,6 +39,9 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" && \
     opcache \
     pcntl \
     sockets \
+# pecl extensions
+    && pecl install redis \
+    && docker-php-ext-enable redis \
 # cleanup
     && docker-php-source delete \
     && apt-get purge -y \
