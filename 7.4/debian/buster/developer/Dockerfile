@@ -60,7 +60,6 @@ RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" && \
     libcurl4-openssl-dev \
     libpng-dev \
     libicu-dev \
-    libzip-dev \
     $PHPIZE_DEPS \
     && apt-get autoremove -y \
     && apt-get clean -y \
