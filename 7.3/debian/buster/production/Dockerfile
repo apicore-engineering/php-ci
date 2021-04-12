@@ -1,5 +1,4 @@
 FROM php:7.3-buster
-MAINTAINER "Bence Gazder"
 LABEL maintainer="bence.gazder@apicore.de"
 
 # install dependencies
@@ -54,7 +53,7 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" && \
     && rm -rf /usr/local/lib/php/test/ \
     && rm -rf /usr/local/bin/phpdbg \
     && echo "Installed packages:" \
-    && apt list --installed \
+    && dpkg --list \
     && php -i \
     && php -v
 

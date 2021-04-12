@@ -1,9 +1,13 @@
-FROM php:7.3-apache-stretch
+FROM php:8.0-buster
 LABEL maintainer="bence.gazder@apicore.de"
 
+COPY --from=apicore/dotenv-filler:latest /usr/bin/dotenv-filler /usr/bin/dotenv-filler
+
+ENV COMPOSER_VERSION 2.0.12
+
 # install dependencies
-RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" && \
-    apt update && apt install -y \
+RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" && \ 
+    apt-get update && apt-get install -y \
     supervisor \
     cron \
     ca-certificates \
@@ -17,20 +21,21 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" && \
     libcurl4-openssl-dev \
     libpng-dev \
     libicu-dev \
+    libonig-dev \
     zip \
     libzip-dev \
     $PHPIZE_DEPS \
-    sudo \
+    nano \
+    git \
+    openssh-client \
 # configure extensions
-    && docker-php-ext-configure zip \
     && docker-php-ext-configure intl --enable-intl \
-    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
 # install extensions
     && docker-php-ext-install \
     mbstring \
     intl \
     curl \
-    json \
     pdo_mysql \
     exif \
     zip \
@@ -39,23 +44,24 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" && \
     opcache \
     pcntl \
     sockets \
-# configure stuff
-    && a2enmod rewrite \
-    && echo "ServerName localhost" >> /etc/apache2/apache2.conf \
+# pecl extensions
+    && pecl install xdebug redis \
+    && docker-php-ext-enable xdebug redis \
+# composer
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=${COMPOSER_VERSION} \
+    && chmod +x /usr/local/bin/composer \
 # cleanup
     && docker-php-source delete \
-    && apt purge -y \
+    && apt-get purge -y \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     libcurl4-openssl-dev \
     libpng-dev \
     libicu-dev \
     $PHPIZE_DEPS \
-    && apt autoclean -y \
-    && apt autoremove -y \
-    && rm -rf /usr/src/ \
-    && rm -rf /usr/local/lib/php/test/ \
-    && rm -rf /usr/local/bin/phpdbg \
+    && apt-get autoremove -y \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/* \
     && echo "Installed packages:" \
     && dpkg --list \
     && php -i \

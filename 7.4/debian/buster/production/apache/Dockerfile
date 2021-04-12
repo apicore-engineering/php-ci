@@ -1,10 +1,11 @@
 FROM php:7.4-apache-buster
-MAINTAINER "Bence Gazder"
 LABEL maintainer="bence.gazder@apicore.de"
+
+COPY --from=apicore/dotenv-filler:latest /usr/bin/dotenv-filler /usr/bin/dotenv-filler
 
 # install dependencies
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" && \
-    apt update && apt install -y \
+    apt-get update && apt-get install -y \
     supervisor \
     cron \
     ca-certificates \
@@ -44,22 +45,26 @@ RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" && \
 # configure stuff
     && a2enmod rewrite \
     && echo "ServerName localhost" >> /etc/apache2/apache2.conf \
+# pecl extensions
+    && pecl install redis \
+    && docker-php-ext-enable redis \
 # cleanup
     && docker-php-source delete \
-    && apt purge -y \
+    && apt-get purge -y \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     libcurl4-openssl-dev \
     libpng-dev \
     libicu-dev \
     $PHPIZE_DEPS \
-    && apt autoclean -y \
-    && apt autoremove -y \
+    && apt-get autoremove -y \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/* \
     && rm -rf /usr/src/ \
     && rm -rf /usr/local/lib/php/test/ \
     && rm -rf /usr/local/bin/phpdbg \
     && echo "Installed packages:" \
-    && apt list --installed \
+    && dpkg --list \
     && php -i \
     && php -v
 

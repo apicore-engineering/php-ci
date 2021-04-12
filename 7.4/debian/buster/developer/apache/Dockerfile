@@ -1,12 +1,13 @@
 FROM php:7.4-apache-buster
-MAINTAINER "Bence Gazder"
 LABEL maintainer="bence.gazder@apicore.de"
 
-ENV COMPOSER_VERSION 1.9.1
+COPY --from=apicore/dotenv-filler:latest /usr/bin/dotenv-filler /usr/bin/dotenv-filler
+
+ENV COMPOSER_VERSION 2.0.12
 
 # install dependencies
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" && \ 
-    apt update && apt install -y \
+    apt-get update && apt-get install -y \
     supervisor \
     cron \
     ca-certificates \
@@ -46,29 +47,28 @@ RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" && \
     pcntl \
     sockets \
 # pecl extensions
-    && pecl install xdebug \
-    && docker-php-ext-enable xdebug \
+    && pecl install xdebug redis \
+    && docker-php-ext-enable xdebug redis \
 # composer
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=${COMPOSER_VERSION} \
     && chmod +x /usr/local/bin/composer \
-# set up composer
-    && composer global require hirak/prestissimo --profile --prefer-dist --no-progress --no-suggest --optimize-autoloader --no-interaction \
 # configure stuff
     && a2enmod rewrite \
     && echo "ServerName localhost" >> /etc/apache2/apache2.conf \
 # cleanup
     && docker-php-source delete \
-    && apt purge -y \
+    && apt-get purge -y \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     libcurl4-openssl-dev \
     libpng-dev \
     libicu-dev \
     $PHPIZE_DEPS \
-    && apt autoclean -y \
-    && apt autoremove -y \
+    && apt-get autoremove -y \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/* \
     && echo "Installed packages:" \
-    && apt list --installed \
+    && dpkg --list \
     && php -i \
     && php -v
 

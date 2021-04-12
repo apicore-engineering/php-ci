@@ -1,5 +1,4 @@
 FROM php:7.3-apache-buster
-MAINTAINER "Bence Gazder"
 LABEL maintainer="bence.gazder@apicore.de"
 
 ENV COMPOSER_VERSION 1.9.1
@@ -67,7 +66,7 @@ RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" && \
     && apt autoclean -y \
     && apt autoremove -y \
     && echo "Installed packages:" \
-    && apt list --installed \
+    && dpkg --list \
     && php -i \
     && php -v
 
