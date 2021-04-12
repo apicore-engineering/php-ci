@@ -1,6 +1,8 @@
 FROM php:8.0-apache-buster
 LABEL maintainer="bence.gazder@apicore.de"
 
+COPY --from=apicore/dotenv-filler:latest /usr/bin/dotenv-filler /usr/bin/dotenv-filler
+
 ENV COMPOSER_VERSION 2.0.12
 
 # install dependencies

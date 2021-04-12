@@ -1,6 +1,7 @@
 FROM php:8.0-buster
 LABEL maintainer="bence.gazder@apicore.de"
 
+COPY --from=apicore/dotenv-filler:latest /usr/bin/dotenv-filler /usr/bin/dotenv-filler
 # install dependencies
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" && \
     apt-get update && apt-get install -y \
