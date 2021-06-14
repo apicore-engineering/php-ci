@@ -24,6 +24,7 @@ RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" && \
     libonig-dev \
     zip \
     libzip-dev \
+    libxml2-dev \
     $PHPIZE_DEPS \
     nano \
     git \
@@ -44,6 +45,7 @@ RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini" && \
     opcache \
     pcntl \
     sockets \
+    soap \
 # pecl extensions
     && pecl install xdebug redis \
     && docker-php-ext-enable xdebug redis \
